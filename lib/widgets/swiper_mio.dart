@@ -14,11 +14,11 @@ class swiper_Mio extends StatelessWidget {
         viewportFraction: 0.7,
         scale: 0.9,
         itemBuilder: (BuildContext context,int index){
-          return new Image.network("http://via.placeholder.com/350x150",fit: BoxFit.fill,);
+          return Image.network("http://via.placeholder.com/350x150",fit: BoxFit.fill,);
         },
         itemCount: 5,
-        pagination: new SwiperPagination(),
-        control: new SwiperControl(),
+        pagination: const SwiperPagination(),
+        control: const SwiperControl(),
       ),
       
     );
