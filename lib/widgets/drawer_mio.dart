@@ -5,8 +5,8 @@ import 'package:peliculas_clone/screens/movies_recent.dart';
 import 'package:peliculas_clone/screens/movies_trailers.dart';
 
 
-class drawer_mio extends StatelessWidget {
-  const drawer_mio({Key key}) : super(key: key);
+class DrawerMio extends StatelessWidget {
+  const DrawerMio({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class drawer_mio extends StatelessWidget {
                   .obtenerUsuarios();
               Navigator.pushNamed(context, '/paginafutbol');*/
               Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => Movies_Pop()),
+              MaterialPageRoute(builder: (context) => MoviesPop()),
               );
             },
           ),
@@ -37,7 +37,7 @@ class drawer_mio extends StatelessWidget {
               Navigator.pushNamed(context, '/paginabasket');*/
 
               Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => Movies_Recent()),
+              MaterialPageRoute(builder: (context) => MoviesRecent()),
               );
             },
           ),
@@ -49,7 +49,7 @@ class drawer_mio extends StatelessWidget {
                   .obtenerUsuarios();
               Navigator.pushNamed(context, '/paginafavoritos');*/
               Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => Movies_Trailers()),
+              MaterialPageRoute(builder: (context) => MoviesTrailers()),
               );
             },
           ),

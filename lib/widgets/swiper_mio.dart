@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 
-class swiper_Mio extends StatelessWidget {
-  const swiper_Mio({Key key}) : super(key: key);
+class SwiperMio extends StatelessWidget {
+  SwiperMio({Key key}) : super(key: key);
+
+  List<String> listaDirecciones = ["https://cdn.pocket-lint.com/r/s/970x/assets/images/159643-tv-news-spider-man-no-way-home-image1-dryautoefj.jpg",
+                                  "https://www.quever.news/u/fotografias/m/2021/5/22/f608x342-10231_39954_0.jpg",
+                                  "https://cdn.pocket-lint.com/r/s/1200x/assets/images/147514-tv-news-feature-mcu-timeline-image31-vlrstw1hpb.jpg",];
 
   @override
   Widget build(BuildContext context) {
@@ -14,9 +18,9 @@ class swiper_Mio extends StatelessWidget {
         viewportFraction: 0.7,
         scale: 0.9,
         itemBuilder: (BuildContext context,int index){
-          return Image.network("http://via.placeholder.com/350x150",fit: BoxFit.fill,);
+          return Image.network(listaDirecciones[index],fit: BoxFit.cover,);
         },
-        itemCount: 5,
+        itemCount: listaDirecciones.length,
         pagination: const SwiperPagination(),
         control: const SwiperControl(),
       ),
