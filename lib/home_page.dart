@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas_clone/controlador.dart';
 import 'package:peliculas_clone/widgets/bottom_nav_bar_mio.dart';
 import 'package:peliculas_clone/widgets/drawer_mio.dart';
-import 'package:peliculas_clone/widgets/listview_mio.dart';
-import 'package:peliculas_clone/widgets/row_chip_mio.dart';
+import 'package:peliculas_clone/widgets/gridview_mio.dart';
+
 import 'package:peliculas_clone/widgets/swiper_mio.dart';
 
 class HomePage extends StatelessWidget {
@@ -13,17 +14,15 @@ class HomePage extends StatelessWidget {
     return SafeArea(
       child: Scaffold(
           bottomNavigationBar: BottomNavBarMio(),
-          drawer: const DrawerMio(),
+          drawer: DrawerMio(),
           appBar: AppBar(
-            backgroundColor: Colors.redAccent,
+            backgroundColor: const Color.fromARGB(255, 34, 2, 36),
             actions: [
+              
               IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.casino_rounded),
-                tooltip: 'Azar',
-              ),
-              IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  showSearch<String>(context: context, delegate: MySearchDelegate());
+                },
                 icon: const Icon(Icons.search),
                 tooltip: 'Buscar',
               ),
@@ -43,11 +42,11 @@ class HomePage extends StatelessWidget {
               const Divider(thickness: 10.0, color: Colors.red),
               SwiperMio(),
               const Divider(thickness: 10.0, color: Colors.red),
-              RowMio(),
-              const Divider(thickness: 10.0, color: Colors.red),
+             
+              
               const SizedBox(
-                child: ListViewBuilder(),
-                height: 350,
+                child: GridViewMio(),
+                height: 390,
               ),
             ],
           )),

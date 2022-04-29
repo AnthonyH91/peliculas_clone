@@ -10,6 +10,8 @@ class BottomNavBarMio extends StatefulWidget {
 class _BottomNavBarMioState extends State<BottomNavBarMio> {
   int _paginaSeleccionada = 0;
 
+  get paginaSeleccionada => _paginaSeleccionada;
+
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(

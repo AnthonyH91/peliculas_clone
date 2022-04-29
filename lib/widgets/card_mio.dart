@@ -38,7 +38,7 @@ class MovieCard extends StatelessWidget {
             BlendMode.multiply,
           ),
           image: CachedNetworkImageProvider(thumbnailUrl),
-          fit: BoxFit.fill,
+          fit: BoxFit.cover,
         ),
       ),
       child: Stack(
@@ -104,7 +104,7 @@ class MovieCard extends StatelessWidget {
                 )
               ],
             ),
-            alignment: Alignment.bottomLeft,
+            alignment: Alignment.topRight,
           ),
         ],
       ),

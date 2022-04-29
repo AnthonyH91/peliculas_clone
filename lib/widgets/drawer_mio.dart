@@ -1,74 +1,74 @@
-// ignore_for_file: prefer_const_constructors
 import 'package:flutter/material.dart';
-import 'package:peliculas_clone/screens/movies_pop.dart';
-import 'package:peliculas_clone/screens/movies_recent.dart';
-import 'package:peliculas_clone/screens/movies_trailers.dart';
-
+import 'package:peliculas_clone/providers/movies_provider.dart';
+import 'package:provider/provider.dart';
 
 class DrawerMio extends StatelessWidget {
-  const DrawerMio({Key key}) : super(key: key);
+  DrawerMio({Key key}) : super(key: key);
+
+  final _eleccionesDePestana = ['Populares', 'Recientes', 'Proximamente'];
+
+  get eleccionesDePestana => _eleccionesDePestana;
 
   @override
   Widget build(BuildContext context) {
-    return Theme(
-      data: Theme.of(context).copyWith(canvasColor: Colors.red),
-      child: Drawer(
-          child: ListView(
-        children: [
-          buildDrawerHeader(context),
-          ListTile(
-            title: Text('PELICULAS POPULARES'),
-            trailing: Icon(Icons.navigate_next),
-            onTap: () {
-              /*Provider.of<JugadorProvider>(context, listen: false)
-                  .obtenerUsuarios();
-              Navigator.pushNamed(context, '/paginafutbol');*/
-              Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => MoviesPop()),
-              );
-            },
-          ),
-          ListTile(
-            title: Text('PELICULAS RECIENTES'),
-            trailing: Icon(Icons.navigate_next),
-            onTap: () {/*
-              Provider.of<JugadorProvider>(context, listen: false)
-                  .obtenerUsuarios();
-              Navigator.pushNamed(context, '/paginabasket');*/
-
-              Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => MoviesRecent()),
-              );
-            },
-          ),
-          ListTile(
-            title: Text('PROXIMAMENTE EN CARTELERA'),
-            trailing: Icon(Icons.navigate_next),
-            onTap: () {
-              /*Provider.of<JugadorProvider>(context, listen: false)
-                  .obtenerUsuarios();
-              Navigator.pushNamed(context, '/paginafavoritos');*/
-              Navigator.of(context).push(
-              MaterialPageRoute(builder: (context) => MoviesTrailers()),
-              );
-            },
-          ),
-        ],
-      )),
+    return Drawer(
+      child: Column(
+        children: [buildDrawerHeader(context), _lista(context)],
+      ),
     );
   }
 
   UserAccountsDrawerHeader buildDrawerHeader(BuildContext context) {
     return UserAccountsDrawerHeader(
-      decoration: BoxDecoration(color: Color.fromARGB(255, 189, 5, 5)),
+      decoration: BoxDecoration(color: Color.fromARGB(255, 34, 2, 36)),
       accountName: Text('Anthony'),
       accountEmail: Text('anthonyhanono@gmail.com'),
-      currentAccountPicture: CircleAvatar(
-        backgroundColor: Color.fromARGB(255, 255, 89, 241),
-        /*backgroundImage: AssetImage(
-          'assets/iconApp.png',
-        ),*/
+      currentAccountPicture: FlutterLogo(),
+    );
+  }
+
+  Widget _lista(context) {
+    return Flexible(
+      child: ListView(
+        children: _crearItems(context),
       ),
     );
+  }
+
+  List<Widget> _crearItems(context) {
+String _urlDelServicioSolicitado;
+
+
+    var widgets = _eleccionesDePestana.map((item) {
+      return ListTile(
+        title: Text(item,
+            style: TextStyle(color: Color.fromARGB(255, 25, 26, 25))),
+        trailing: Icon(Icons.navigate_next),
+        onTap: () {
+          /// Provider.of<JugadorProvider>(context, listen: false).obtenerUsuarios();
+          /// si quiero hacer una pantalla individual o generica uso esa direccion ('/movie_$item')
+          /// Navigator.pushNamed(context, ('/movie_$item')  ,arguments: item);
+
+          if (item == 'Populares' || item == 'Recientes') {
+            if (item == 'Populares') {
+              _urlDelServicioSolicitado =
+                  'https://api.themoviedb.org/3/movie/popular?api_key=0e685fd77fb3d76874a3ac26e0db8a4b&language=en-US&page=1';
+            } else {
+              _urlDelServicioSolicitado =
+                  'https://api.themoviedb.org/3/movie/now_playing?api_key=0e685fd77fb3d76874a3ac26e0db8a4b&language=en-US&page=1';
+            }
+          } else {
+            _urlDelServicioSolicitado =
+                'https://api.themoviedb.org/3/movie/upcoming?api_key=0e685fd77fb3d76874a3ac26e0db8a4b&language=en-US&page=1';
+          }
+
+          Provider.of<MoviesProvider>(context, listen: false)
+              .getListadoPeliculas(_urlDelServicioSolicitado);
+          Navigator.pushNamed(context, ('/movie_generic'), arguments: item);
+        },
+      );
+    }).toList();
+
+    return widgets;
   }
 }
