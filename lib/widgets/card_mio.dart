@@ -1,16 +1,21 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:peliculas_clone/classes/movie.dart';
 
 class MovieCard extends StatelessWidget {
   final String title;
   final String rating;
   final String release;
   final String thumbnailUrl;
+  final String id;
+ 
   const MovieCard({
     @required this.title,
     @required this.release,
     @required this.rating,
     @required this.thumbnailUrl,
+    @required this.id,
+    
   });
   @override
   Widget build(BuildContext context) {
@@ -75,7 +80,7 @@ class MovieCard extends StatelessWidget {
                         size: 18,
                       ),
                       const SizedBox(width: 7),
-                      Text(release,
+                      Text(release +' ' + id,
                           style:
                               TextStyle(color: Colors.white, fontSize: 20.0)),
                     ],

@@ -19,7 +19,7 @@ class DrawerMio extends StatelessWidget {
   }
 
   UserAccountsDrawerHeader buildDrawerHeader(BuildContext context) {
-    return UserAccountsDrawerHeader(
+    return const UserAccountsDrawerHeader(
       decoration: BoxDecoration(color: Color.fromARGB(255, 34, 2, 36)),
       accountName: Text('Anthony'),
       accountEmail: Text('anthonyhanono@gmail.com'),
@@ -36,12 +36,9 @@ class DrawerMio extends StatelessWidget {
   }
 
   List<Widget> _crearItems(context) {
-String _urlDelServicioSolicitado;
-
-
-    var widgets = _eleccionesDePestana.map((item) {
+    List<ListTile> widgets = _eleccionesDePestana.map((itemElegido) {
       return ListTile(
-        title: Text(item,
+        title: Text(itemElegido,
             style: TextStyle(color: Color.fromARGB(255, 25, 26, 25))),
         trailing: Icon(Icons.navigate_next),
         onTap: () {
@@ -49,22 +46,11 @@ String _urlDelServicioSolicitado;
           /// si quiero hacer una pantalla individual o generica uso esa direccion ('/movie_$item')
           /// Navigator.pushNamed(context, ('/movie_$item')  ,arguments: item);
 
-          if (item == 'Populares' || item == 'Recientes') {
-            if (item == 'Populares') {
-              _urlDelServicioSolicitado =
-                  'https://api.themoviedb.org/3/movie/popular?api_key=0e685fd77fb3d76874a3ac26e0db8a4b&language=en-US&page=1';
-            } else {
-              _urlDelServicioSolicitado =
-                  'https://api.themoviedb.org/3/movie/now_playing?api_key=0e685fd77fb3d76874a3ac26e0db8a4b&language=en-US&page=1';
-            }
-          } else {
-            _urlDelServicioSolicitado =
-                'https://api.themoviedb.org/3/movie/upcoming?api_key=0e685fd77fb3d76874a3ac26e0db8a4b&language=en-US&page=1';
-          }
-
           Provider.of<MoviesProvider>(context, listen: false)
-              .getListadoPeliculas(_urlDelServicioSolicitado);
-          Navigator.pushNamed(context, ('/movie_generic'), arguments: item);
+              .getListadoPeliculas(itemElegido);
+              
+          Navigator.pushNamed(context, ('/movie_generic'),
+              arguments: itemElegido);
         },
       );
     }).toList();

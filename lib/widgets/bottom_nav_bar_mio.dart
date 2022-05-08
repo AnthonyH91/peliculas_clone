@@ -18,11 +18,18 @@ class _BottomNavBarMioState extends State<BottomNavBarMio> {
       onTap: (index) {
         setState(() {
           _paginaSeleccionada = index;
+
+          if (_paginaSeleccionada == 2) {
+            Navigator.pushNamed(context, ('/movie_favourites'));
+          }
         });
       },
       currentIndex: _paginaSeleccionada,
       items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: "HOME"),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.home),
+          label: "HOME",
+        ),
         BottomNavigationBarItem(
             icon: Icon(Icons.movie_creation), label: "CARTELERA"),
         BottomNavigationBarItem(icon: Icon(Icons.star), label: "FAVORITOS")
