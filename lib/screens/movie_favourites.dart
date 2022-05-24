@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:peliculas_clone/classes/movie.dart';
 import 'package:peliculas_clone/providers/movies_provider.dart';
@@ -21,18 +23,20 @@ class MovieFavourites extends StatelessWidget {
             children: [
               Consumer<MoviesProvider>(
                 builder: (BuildContext context, data, _) {
-                  //consumer de tipo jugadorProvider
-                  List<Widget> widgetPeliculas = data.movies.map((Movie movie) {
+                  List<Widget> widgetPeliculasFavoritas =
+                      data.allMovies.map((Movie movie) {
+                        
+
                     return Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.all(0.1),
                         child: data.listadoPeliculaFavoritos.contains(movie.id)
                             ? ListTile(
                                 leading: Icon(
                                   Icons.verified_user,
                                   color: data.listadoPeliculaFavoritos
                                           .contains(movie.id)
-                                      ? Colors.red
-                                      : Colors.blueGrey,
+                                      ? Color.fromARGB(255, 187, 245, 29)
+                                      : Color.fromARGB(255, 12, 141, 205),
                                 ),
                                 title: Text(movie.title),
                                 textColor: Colors.black,
@@ -55,7 +59,7 @@ class MovieFavourites extends StatelessWidget {
 
                   return Expanded(
                     child: ListView(
-                      children: widgetPeliculas,
+                      children: widgetPeliculasFavoritas,
                     ),
                   );
                 },

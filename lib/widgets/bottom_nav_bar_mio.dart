@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas_clone/providers/movies_provider.dart';
+import 'package:provider/provider.dart';
 
 class BottomNavBarMio extends StatefulWidget {
-  BottomNavBarMio({Key key}) : super(key: key);
+  const BottomNavBarMio({Key key}) : super(key: key);
 
   @override
   State<BottomNavBarMio> createState() => _BottomNavBarMioState();
 }
 
 class _BottomNavBarMioState extends State<BottomNavBarMio> {
+  final List<String> _listaDirecciones = ['Populares','Recientes','Proximamente',
+    
+  ];
+
+
+  get listaDirecciones => _listaDirecciones;
+
   int _paginaSeleccionada = 0;
 
   get paginaSeleccionada => _paginaSeleccionada;
@@ -21,6 +30,16 @@ class _BottomNavBarMioState extends State<BottomNavBarMio> {
 
           if (_paginaSeleccionada == 2) {
             Navigator.pushNamed(context, ('/movie_favourites'));
+          }
+          if (_paginaSeleccionada == 1) {
+            /*for (int i = 0; i < _listaDirecciones.length ; i++) {
+
+              Provider.of<MoviesProvider>(context, listen: false)
+              .getListadoPeliculasTotal(_listaDirecciones[i]);
+
+            }*/
+            Navigator.pushNamed(context, ('/movie_totals'),
+              arguments: 'Listado Completo');
           }
         });
       },

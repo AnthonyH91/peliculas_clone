@@ -48,7 +48,9 @@ class DrawerMio extends StatelessWidget {
 
           Provider.of<MoviesProvider>(context, listen: false)
               .getListadoPeliculas(itemElegido);
-              
+
+          
+
           Navigator.pushNamed(context, ('/movie_generic'),
               arguments: itemElegido);
         },

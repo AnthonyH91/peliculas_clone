@@ -38,15 +38,17 @@ class _MoviesDetailsState extends State<MoviesDetails> {
               context
                   .read<MoviesProvider>()
                   .agregarEliminarPeliculaFavoritos(peliculaSeleccionada.id);
+                  
+                  
             },
             icon: Consumer<MoviesProvider>(builder: (context, data, _) {
               bool esFav = data.listadoPeliculaFavoritos
                   .contains(peliculaSeleccionada.id);
 
               return Icon(
-                // ignore: dead_code
+                
                 esFav ? Icons.favorite : Icons.favorite_outline,
-                // ignore: dead_code
+                
                 color: esFav ? Colors.red : Color.fromARGB(255, 246, 255, 0),
                 size: 50,
               );
@@ -130,12 +132,7 @@ class _MoviesDetailsState extends State<MoviesDetails> {
                           ),
                         ],
                       ),
-                    ElevatedButton(
-                    onPressed: () {
-                      Navigator.popUntil(context, ModalRoute.withName('/'));
-                    },
-                    child: const Text('Atrás'),
-                  ),],
+                    ],
                     
                   ),
                 ),
@@ -154,6 +151,14 @@ class _MoviesDetailsState extends State<MoviesDetails> {
                 ),
               ),
             ),
+            Center(
+                      child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text('Atrás'),
+                                      ),
+                    ),
            
           ],
         ),

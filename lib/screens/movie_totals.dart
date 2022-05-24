@@ -8,14 +8,14 @@ import 'package:peliculas_clone/widgets/card_mio.dart';
 
 import 'package:provider/provider.dart';
 
-class MoviesGenerics extends StatefulWidget {
-  MoviesGenerics({Key key}) : super(key: key);
+class MoviesTotals extends StatefulWidget {
+  MoviesTotals({Key key}) : super(key: key);
 
   @override
-  State<MoviesGenerics> createState() => _MoviesGenericsState();
+  State<MoviesTotals> createState() => _MoviesTotalsState();
 }
 
-class _MoviesGenericsState extends State<MoviesGenerics> {
+class _MoviesTotalsState extends State<MoviesTotals> {
   String _urlDelServicioSolicitado;
 
   get urlDelServicioSolicitado => _urlDelServicioSolicitado;
@@ -42,16 +42,16 @@ class _MoviesGenericsState extends State<MoviesGenerics> {
           )
         ],
       ),
-      body: Consumer<MoviesProvider>
-        (builder: (BuildContext context, data, _) {
-        if (data.movies.isEmpty) {
+      body: Consumer<MoviesProvider>(builder: (BuildContext context, data, _) {
+        if (data.allMovies.isEmpty) {
           return const Center(
               child: Image(
             image: AssetImage('assets/Cube.gif'),
           ));
         }
 
-        List<MovieCard> widgetpeliculas = data.movies.map((Movie movie) {
+        List<MovieCard> widgetpeliculas = data.allMovies.map((Movie movie) {
+          
           return MovieCard(
             title: movie.title,
             thumbnailUrl: getImage(movie.image),
@@ -111,10 +111,10 @@ class _MoviesGenericsState extends State<MoviesGenerics> {
                         children: [
                           TextButton(
                             onPressed: () {
-                              int numeroAzar = Random().nextInt(19);
+                              int numeroAzar = Random().nextInt(59);
                               Navigator.pushNamed(context, ('/movie_details'),
                                   arguments:
-                                      data.movies[numeroAzar]);
+                                      data.allMovies[numeroAzar]);
 
                             },
                             child: Text('ELEGIR AL AZAR'),
@@ -123,7 +123,7 @@ class _MoviesGenericsState extends State<MoviesGenerics> {
                             onPressed: () {
                               Navigator.pushNamed(context, ('/movie_details'),
                                   arguments:
-                                      data.movies[indexDelListadoPeliculas]);
+                                      data.allMovies[indexDelListadoPeliculas]);
                             },
                             child: Text('DETALLES DE LA PELICULA'),
                           ),
@@ -142,6 +142,8 @@ class _MoviesGenericsState extends State<MoviesGenerics> {
                 perspective: 0.004,
                 children: widgetpeliculas,
                 onSelectedItemChanged: (index) {
+                  
+                  
                   setState(() {
                     indexDelListadoPeliculas = index;
                   });

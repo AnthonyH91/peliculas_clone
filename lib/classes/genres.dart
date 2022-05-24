@@ -2,7 +2,7 @@
 
 class Genre {
   final String nameGenre;
-  final int id;
+  final String id;
 
   Genre({
     this.nameGenre,
@@ -12,7 +12,9 @@ class Genre {
   factory Genre.fromJson(Map genero) {
     return Genre(
       nameGenre: genero["name"],
-      id: genero["id"],
+      id: genero["id"].toString(),
     );
   }
 }
+
+

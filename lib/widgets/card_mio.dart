@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:peliculas_clone/classes/movie.dart';
+
 
 class MovieCard extends StatelessWidget {
   final String title;
@@ -43,13 +43,13 @@ class MovieCard extends StatelessWidget {
             BlendMode.multiply,
           ),
           image: CachedNetworkImageProvider(thumbnailUrl),
-          fit: BoxFit.cover,
+          fit: BoxFit.fill,
         ),
       ),
       child: Stack(
         children: [
           Align(
-            child: Padding(
+            /*child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5.0),
               child: Text(
                 title,
@@ -59,7 +59,7 @@ class MovieCard extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            alignment: Alignment.topCenter,
+            alignment: Alignment.topCenter,*/
           ),
           Align(
             child: Row(
@@ -73,7 +73,7 @@ class MovieCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Row(
-                    children: [
+                    children: [/*
                       const Icon(
                         Icons.schedule,
                         color: Colors.yellow,
@@ -82,7 +82,7 @@ class MovieCard extends StatelessWidget {
                       const SizedBox(width: 7),
                       Text(release +' ' + id,
                           style:
-                              TextStyle(color: Colors.white, fontSize: 20.0)),
+                              TextStyle(color: Colors.white, fontSize: 20.0)),*/
                     ],
                   ),
                 ),
@@ -94,7 +94,7 @@ class MovieCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Row(
-                    children: [
+                    children: [/*
                       const Icon(
                         Icons.star,
                         color: Colors.yellow,
@@ -103,7 +103,7 @@ class MovieCard extends StatelessWidget {
                       const SizedBox(width: 7),
                       Text(rating,
                           style:
-                              TextStyle(color: Colors.white, fontSize: 20.0)),
+                              TextStyle(color: Colors.white, fontSize: 20.0)),*/
                     ],
                   ),
                 )

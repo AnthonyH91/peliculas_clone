@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:peliculas_clone/providers/movies_provider.dart';
+import 'package:provider/provider.dart';
 
 class SwiperMio extends StatefulWidget {
   SwiperMio({Key key}) : super(key: key);
@@ -9,27 +11,34 @@ class SwiperMio extends StatefulWidget {
 }
 
 class _SwiperMioState extends State<SwiperMio> {
-  List<String> listaDirecciones = ["https://cdn.pocket-lint.com/r/s/970x/assets/images/159643-tv-news-spider-man-no-way-home-image1-dryautoefj.jpg",
-                                  "https://www.quever.news/u/fotografias/m/2021/5/22/f608x342-10231_39954_0.jpg",
-                                  "https://cdn.pocket-lint.com/r/s/1200x/assets/images/147514-tv-news-feature-mcu-timeline-image31-vlrstw1hpb.jpg",];
+
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: double.infinity,
-      height: 250.0,
-      child: Swiper(
-        
-        viewportFraction: 0.7,
-        scale: 0.9,
-        itemBuilder: (BuildContext context,int index){
-          return Image.network(listaDirecciones[index],fit: BoxFit.cover,);
-        },
-        itemCount: listaDirecciones.length,
-        pagination: const SwiperPagination(),
-        control: const SwiperControl(),
-      ),
-      
-    );
+        width: double.infinity,
+        height: 250.0,
+        child:
+            Consumer<MoviesProvider>(builder: (BuildContext context, data, _) {
+              if (data.movies.isEmpty) {
+          return const Center(
+              child: Image(
+            image: AssetImage('assets/Cube.gif'),
+          ));
+        }
+          return Swiper(
+            viewportFraction: 0.5,
+            scale: 0.9,
+            itemBuilder: (BuildContext context, int index) {
+              return Image.network(
+                getImage(data.allMovies[index].image),
+                fit: BoxFit.fill,
+              );
+            },
+            itemCount: 5,
+            pagination: const SwiperPagination(),
+            control: const SwiperControl(),
+          );
+        }));
   }
 }
