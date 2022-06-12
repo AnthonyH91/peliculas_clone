@@ -8,8 +8,6 @@ import 'package:peliculas_clone/screens/movie_generic.dart';
 import 'package:peliculas_clone/screens/movie_totals.dart';
 import 'package:provider/provider.dart';
 
-//import 'package:provider/provider.dart';
-
 
 void main() => runApp(const MyApp());
 
@@ -32,11 +30,11 @@ class MyApp extends StatelessWidget {
           //Armo las rutas
           initialRoute: '/',
           routes: {
-            '/': (context) => HomePage(),
-            '/movie_generic': (context) => MoviesGenerics(),
-            '/movie_totals': (context) => MoviesTotals(),
-            '/movie_details': (context) => MoviesDetails(),
-            '/movie_favourites':(context) => MovieFavourites(),
+            '/': (context) => const HomePage(),
+            '/movie_generic': (context) => const MoviesGenerics(),
+            '/movie_totals': (context) => const MoviesTotals(),
+            '/movie_details': (context) => const MoviesDetails(),
+            '/movie_favourites':(context) => const MovieFavourites(),
     
           }),
     );

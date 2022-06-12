@@ -8,35 +8,35 @@ class GridViewMio extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 3,
-        ),
-        itemCount: 30,
-        itemBuilder: (BuildContext context, int index) {
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Consumer<MoviesProvider>(
-                builder: (BuildContext context, data, _) {
-                  if (data.movies.isEmpty) {
-          return const Center(
-              child: Image(
-            image: AssetImage('assets/Cube.gif'),
-          ));
-        }
-              return ClipRRect(
-                borderRadius: BorderRadius.circular(30),
-                child: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: CachedNetworkImageProvider(
-                          getImage(data.allMovies[index].image)),
-                    ),
-                  ),
-                ),
-              );
-            }),
-          );
-        });
+    
+    return Consumer<MoviesProvider>(builder: (BuildContext context, data, _) {
+      
+      return GridView.builder(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 3,
+          ),
+          itemCount: data.allMovies.length,
+          itemBuilder: (BuildContext context, int index) {
+            return Padding(
+                padding: const EdgeInsets.all(2.0),
+                child: data.allMovies.isEmpty
+                    ? {
+                        const Center(
+                            child: Image(
+                          image: AssetImage('assets/Cube.gif'),
+                        ))
+                      }
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(50),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            image: DecorationImage(
+                              image: CachedNetworkImageProvider(
+                                  getImage(data.allMovies[index].image)),
+                            ),
+                          ),
+                        )));
+          });
+    });
   }
 }

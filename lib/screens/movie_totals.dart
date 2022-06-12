@@ -2,14 +2,18 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:peliculas_clone/classes/movie.dart';
+import 'package:peliculas_clone/controlador.dart';
+import 'package:peliculas_clone/mis_colores.dart';
 
 import 'package:peliculas_clone/providers/movies_provider.dart';
+import 'package:peliculas_clone/widgets/bottom_nav_bar_mio.dart';
+
 import 'package:peliculas_clone/widgets/card_mio.dart';
 
 import 'package:provider/provider.dart';
 
 class MoviesTotals extends StatefulWidget {
-  MoviesTotals({Key key}) : super(key: key);
+  const MoviesTotals({Key key}) : super(key: key);
 
   @override
   State<MoviesTotals> createState() => _MoviesTotalsState();
@@ -26,20 +30,37 @@ class _MoviesTotalsState extends State<MoviesTotals> {
   Widget build(BuildContext context) {
     final args = ModalRoute.of(context).settings.arguments as String;
 
+    return Consumer<MoviesProvider>(builder: (BuildContext context, data, _) {
+
     return Scaffold(
+      backgroundColor: MyColors.colorQuinto,
       appBar: AppBar(
-        title: Text(args),
-        backgroundColor: Colors.redAccent,
+        title: Text(args.toUpperCase()),
+        leading: IconButton(
+              onPressed: () {
+                      data.actualizarIndice(0);
+                         Navigator.popUntil(context, ModalRoute.withName('/'));
+                
+              },
+              icon: const Icon(Icons.arrow_back),),
+        backgroundColor: MyColors.colorSegundo,
         actions: [
-          IconButton(onPressed: () {}, icon: const Icon(Icons.search)),
-          PopupMenuButton(
+          IconButton(
+              onPressed: () {
+                showSearch(
+                    context: context, delegate: MySearchDelegate());
+              },
+              icon: const Icon(Icons.search),
+              tooltip: 'Buscar',
+            ),
+          /*PopupMenuButton(
             itemBuilder: (context) {
               return [
                 const PopupMenuItem(child: Text('Ayuda')),
                 const PopupMenuItem(child: Text('Recomendar APP'))
               ];
             },
-          )
+          )*/
         ],
       ),
       body: Consumer<MoviesProvider>(builder: (BuildContext context, data, _) {
@@ -67,6 +88,7 @@ class _MoviesTotalsState extends State<MoviesTotals> {
             Consumer<MoviesProvider>(
               builder: (BuildContext context, data, _) {
                 return Card(
+                  color: MyColors.colorTercero,
                   elevation: 10,
                   clipBehavior: Clip.antiAlias,
                   shape: RoundedRectangleBorder(
@@ -77,7 +99,7 @@ class _MoviesTotalsState extends State<MoviesTotals> {
                       Stack(
                         children: [
                           Ink.image(
-                            image: AssetImage('assets/Cube.gif'),
+                            image: const AssetImage('assets/Cube.gif'),
                             child: InkWell(
                               onTap: () {},
                             ),
@@ -102,22 +124,27 @@ class _MoviesTotalsState extends State<MoviesTotals> {
                       Padding(
                         padding: const EdgeInsets.all(16.0).copyWith(bottom: 0),
                         child: const Text(
-                          'Elegi la pelicula que desees ver la descripcion, sino podes elegir una al azar',
-                          style: TextStyle(fontSize: 20),
+                          'Elegi la pelicula que desees para ver su descripcion, sino podes elegir una al azar',
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.bold),
                         ),
                       ),
                       ButtonBar(
+                        
                         alignment: MainAxisAlignment.spaceBetween,
                         children: [
                           TextButton(
                             onPressed: () {
-                              int numeroAzar = Random().nextInt(59);
+                              int numeroAzar = Random().nextInt(data.allMovies.length);
                               Navigator.pushNamed(context, ('/movie_details'),
-                                  arguments:
-                                      data.allMovies[numeroAzar]);
-
+                                  arguments: data.allMovies[numeroAzar]);
                             },
-                            child: Text('ELEGIR AL AZAR'),
+                            child: Text('ELEGIR AL AZAR',
+                                style: TextStyle(
+                                  color: MyColors.colorCuarto,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                )),
                           ),
                           TextButton(
                             onPressed: () {
@@ -125,7 +152,12 @@ class _MoviesTotalsState extends State<MoviesTotals> {
                                   arguments:
                                       data.allMovies[indexDelListadoPeliculas]);
                             },
-                            child: Text('DETALLES DE LA PELICULA'),
+                            child: Text('DETALLES DE LA PELICULA',
+                                style: TextStyle(
+                                  color: MyColors.colorCuarto,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16,
+                                )),
                           ),
                         ],
                       ),
@@ -134,7 +166,7 @@ class _MoviesTotalsState extends State<MoviesTotals> {
                 );
               },
             ),
-            Divider(),
+            const Divider(),
             Expanded(
               child: ListWheelScrollView(
                 itemExtent: 350,
@@ -165,6 +197,8 @@ class _MoviesTotalsState extends State<MoviesTotals> {
           ],
         );
       }),
+      bottomNavigationBar: const BottomNavBarMio(),
     );
-  }
+  });
+}
 }

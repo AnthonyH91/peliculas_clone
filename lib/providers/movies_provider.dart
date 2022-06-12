@@ -6,22 +6,11 @@ import 'package:peliculas_clone/classes/movie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MoviesProvider extends ChangeNotifier {
-   
-
-
   final List<Movie> _movies = [];
   List<Movie> get movies => _movies;
 
   final List<Movie> _allMovies = [];
   List<Movie> get allMovies => _allMovies;
-
-
-
-
-
-
-
-
 
   MoviesProvider.init() {
     cargarListadoFavoritosDesdePreferencias();
@@ -29,10 +18,6 @@ class MoviesProvider extends ChangeNotifier {
 
   final List<String> _listadoPeliculaFavoritos = [];
   List<String> get listadoPeliculaFavoritos => _listadoPeliculaFavoritos;
-
-
-
-
 
   String _urlDelServicioSolicitado = '';
   String _urlDelServicioSolicitado2 = '';
@@ -89,17 +74,43 @@ class MoviesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  agregarEliminarPeliculaFavoritos(String idPelicula) async {
+  agregarEliminarPeliculaFavoritos(context, String idPelicula) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     if (_listadoPeliculaFavoritos.contains(idPelicula) == true) {
       _listadoPeliculaFavoritos.remove(idPelicula);
+      ScaffoldMessenger.of(context)
+        ..removeCurrentSnackBar()
+        ..showSnackBar(SnackBar(
+          duration: const Duration(seconds: 5),
+          content: const Text('ELIMINADA DE FAVORITOS'),
+          action: SnackBarAction(
+              label: 'Ver listado',
+              onPressed: () {
+                Navigator.pushNamed(context, ('/movie_favourites'),
+                    arguments: 'Listado Favoritos');
+                    actualizarIndice(2);
+              }),
+        ));
     } else {
       _listadoPeliculaFavoritos.add(idPelicula);
+      ScaffoldMessenger.of(context)
+        ..removeCurrentSnackBar()
+        ..showSnackBar(SnackBar(
+          duration: const Duration(seconds: 5),
+          content: const Text('AGREGADA A FAVORITOS'),
+          action: SnackBarAction(
+              label: 'Ver listado',
+              onPressed: () {
+                Navigator.pushNamed(context, ('/movie_favourites'),
+                    arguments: 'Listado Favoritos');
+                    actualizarIndice(2);
+              }),
+        ));
     }
 
     await prefs.setStringList('listadoFavoritos', _listadoPeliculaFavoritos);
-    print(_listadoPeliculaFavoritos);
+    //print(_listadoPeliculaFavoritos);
     notifyListeners();
   }
 
@@ -110,10 +121,9 @@ class MoviesProvider extends ChangeNotifier {
     _listadoPeliculaFavoritos.addAll(listado);
   }
 
-
-Future getListadoPeliculasTotal(String itemParaValidarUrl2) async {
-  _allMovies.clear();
-  SharedPreferences prefs = await SharedPreferences.getInstance();
+  Future getListadoPeliculasTotal(String itemParaValidarUrl2) async {
+    _allMovies.clear();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
 
     String datosAlmacenadosJson;
 
@@ -131,8 +141,6 @@ Future getListadoPeliculasTotal(String itemParaValidarUrl2) async {
           'https://api.themoviedb.org/3/movie/upcoming?api_key=0e685fd77fb3d76874a3ac26e0db8a4b&language=en-US&page=1';
     }
 
-    
-
     try {
       ///Levanta datos de internet
       Client http = Client();
@@ -147,7 +155,8 @@ Future getListadoPeliculasTotal(String itemParaValidarUrl2) async {
     } catch (e) {
       /// Levanta informacion local
 
-      datosAlmacenadosJson = prefs.getString('carteleraTotal$itemParaValidarUrl2');
+      datosAlmacenadosJson =
+          prefs.getString('carteleraTotal$itemParaValidarUrl2');
     }
 
     Map jsonData = jsonDecode(datosAlmacenadosJson);
@@ -158,33 +167,28 @@ Future getListadoPeliculasTotal(String itemParaValidarUrl2) async {
         peliculas.map((movies) => Movie.fromJson(movies)).toList();
 
 // inyecto el listado de peliculas al provider
-_allMovies.addAll(cartelera);
+    _allMovies.addAll(cartelera);
 
-  var seen = Set<String>();
-List<Movie> uniquelist = _allMovies.where((pelicula) => seen.add(pelicula.id)).toList();
+    var seen = <String>{};
+    List<Movie> uniquelist =
+        _allMovies.where((pelicula) => seen.add(pelicula.id)).toList();
 
-    
+    _allMovies.clear();
 
+    _allMovies.addAll(uniquelist);
 
-_allMovies.clear();
+    notifyListeners();
+  }
 
-_allMovies.addAll(uniquelist);
+  int _indiceScreen = 0;
+  get indiceScreen => _indiceScreen;
 
+  actualizarIndice(int valor) {
+    _indiceScreen = valor;
 
-  
-
-
-
-
-  notifyListeners();
-
+    notifyListeners();
+  }
 }
-
-
-
-
-}
-
 
 String getImage(String urlPoster) {
   return "https://image.tmdb.org/t/p/w600_and_h900_bestv2/" + urlPoster;

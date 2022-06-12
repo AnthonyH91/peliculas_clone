@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas_clone/classes/movie.dart';
+import 'package:peliculas_clone/mis_colores.dart';
 import 'package:peliculas_clone/providers/movies_provider.dart';
 import 'package:provider/provider.dart';
 
 class MoviesDetails extends StatefulWidget {
-  MoviesDetails({Key key}) : super(key: key);
+ const  MoviesDetails({Key key}) : super(key: key);
 
   @override
   State<MoviesDetails> createState() => _MoviesDetailsState();
@@ -18,26 +19,27 @@ class _MoviesDetailsState extends State<MoviesDetails> {
     //final args = ModalRoute.of(context).settings.arguments as int;
     final peliculaSeleccionada =
         ModalRoute.of(context).settings.arguments as Movie;
-
+return Consumer<MoviesProvider>(builder: (BuildContext context, data, _) {
     return Scaffold(
+      
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: Text(
+        /*title: Text(
           peliculaSeleccionada.title,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 22,
             fontWeight: FontWeight.bold,
           ),
-        ),
+        ),*/
         actions: [
           IconButton(
-            padding: EdgeInsets.only(right: 50),
+            padding: const EdgeInsets.only(right: 50),
             onPressed: () {
               context
                   .read<MoviesProvider>()
-                  .agregarEliminarPeliculaFavoritos(peliculaSeleccionada.id);
+                  .agregarEliminarPeliculaFavoritos(context ,peliculaSeleccionada.id);
                   
                   
             },
@@ -49,14 +51,14 @@ class _MoviesDetailsState extends State<MoviesDetails> {
                 
                 esFav ? Icons.favorite : Icons.favorite_outline,
                 
-                color: esFav ? Colors.red : Color.fromARGB(255, 246, 255, 0),
+                color: esFav ? Colors.red : const Color.fromARGB(255, 246, 255, 0),
                 size: 50,
               );
             }),
           ),
         ],
       ),
-      backgroundColor: Color.fromARGB(0, 250, 250, 250),
+      backgroundColor: const Color.fromARGB(0, 250, 250, 250),
       extendBodyBehindAppBar: true,
       body: SingleChildScrollView(
         child: Column(
@@ -75,9 +77,9 @@ class _MoviesDetailsState extends State<MoviesDetails> {
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
                     colors: [
-                      Color(0xFF1a1a2c),
-                      Color(0xFF1a1a2c).withOpacity(0.8),
-                      Color(0xFF1a1a2c).withOpacity(0.5),
+                     const  Color(0xFF1a1a2c),
+                     const  Color(0xFF1a1a2c).withOpacity(0.8),
+                     const Color(0xFF1a1a2c).withOpacity(0.5),
                       Colors.transparent,
                     ],
                     begin: Alignment.bottomCenter,
@@ -85,20 +87,20 @@ class _MoviesDetailsState extends State<MoviesDetails> {
                   ),
                 ),
                 child: Padding(
-                  padding: EdgeInsets.only(left: 15, bottom: 20),
+                  padding: const EdgeInsets.only(left: 15, bottom: 20),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         peliculaSeleccionada.title,
-                        style: TextStyle(
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       Text(
                         "${peliculaSeleccionada.release}, Lanzamiento",
                         style: TextStyle(
@@ -107,17 +109,17 @@ class _MoviesDetailsState extends State<MoviesDetails> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       Row(
                         children: [
                           Text(
                             peliculaSeleccionada.average.toString(),
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: Colors.yellow,
                               fontSize: 17,
                             ),
                           ),
-                          SizedBox(width: 5),
+                          const SizedBox(width: 5),
                           ...List.generate(
                             5,
                             (index) => Icon(
@@ -153,8 +155,15 @@ class _MoviesDetailsState extends State<MoviesDetails> {
             ),
             Center(
                       child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(140, 40),
+                          textStyle: const TextStyle(fontSize: 24),
+                          primary: MyColors.colorTercero,
+                          onPrimary: MyColors.colorCuarto,
+                        ),
                       onPressed: () {
                         Navigator.pop(context);
+                        data.actualizarIndice(2);
                       },
                       child: const Text('Atrás'),
                                       ),
@@ -164,10 +173,10 @@ class _MoviesDetailsState extends State<MoviesDetails> {
         ),
       ),
     );
-  }
+  });
 }
           
-
+}
 
             
 /*Column(

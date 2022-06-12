@@ -9,14 +9,14 @@ class MovieCard extends StatelessWidget {
   final String thumbnailUrl;
   final String id;
  
-  const MovieCard({
+  const MovieCard({Key key, 
     @required this.title,
     @required this.release,
     @required this.rating,
     @required this.thumbnailUrl,
     @required this.id,
     
-  });
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,7 +48,7 @@ class MovieCard extends StatelessWidget {
       ),
       child: Stack(
         children: [
-          Align(
+          const Align(
             /*child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 5.0),
               child: Text(
@@ -73,7 +73,7 @@ class MovieCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Row(
-                    children: [/*
+                    children: const [/*
                       const Icon(
                         Icons.schedule,
                         color: Colors.yellow,
@@ -94,7 +94,7 @@ class MovieCard extends StatelessWidget {
                     borderRadius: BorderRadius.circular(15),
                   ),
                   child: Row(
-                    children: [/*
+                    children: const [/*
                       const Icon(
                         Icons.star,
                         color: Colors.yellow,

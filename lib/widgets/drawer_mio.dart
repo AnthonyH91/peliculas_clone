@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:peliculas_clone/mis_colores.dart';
 import 'package:peliculas_clone/providers/movies_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -12,6 +13,7 @@ class DrawerMio extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: MyColors.colorQuinto,
       child: Column(
         children: [buildDrawerHeader(context), _lista(context)],
       ),
@@ -19,12 +21,12 @@ class DrawerMio extends StatelessWidget {
   }
 
   UserAccountsDrawerHeader buildDrawerHeader(BuildContext context) {
-    return const UserAccountsDrawerHeader(
-      decoration: BoxDecoration(color: Color.fromARGB(255, 34, 2, 36)),
-      accountName: Text('Anthony'),
-      accountEmail: Text('anthonyhanono@gmail.com'),
-      currentAccountPicture: FlutterLogo(),
-    );
+    return UserAccountsDrawerHeader(
+      decoration: BoxDecoration(color: MyColors.colorSegundo),
+      accountName: const Text('Anthony Hanono', style: TextStyle(fontSize: 24,)),
+      accountEmail: const Text('anthonyhanono@gmail.com', style: TextStyle(fontSize: 16,)),
+      currentAccountPicture: CircleAvatar(
+        backgroundColor: MyColors.colorTercero,backgroundImage: const AssetImage('assets/iconapp.png'),),);
   }
 
   Widget _lista(context) {
@@ -39,8 +41,8 @@ class DrawerMio extends StatelessWidget {
     List<ListTile> widgets = _eleccionesDePestana.map((itemElegido) {
       return ListTile(
         title: Text(itemElegido,
-            style: TextStyle(color: Color.fromARGB(255, 25, 26, 25))),
-        trailing: Icon(Icons.navigate_next),
+            style: TextStyle(color: MyColors.colorCuarto,fontSize: 22,)),
+        trailing: const Icon(Icons.navigate_next),
         onTap: () {
           /// Provider.of<JugadorProvider>(context, listen: false).obtenerUsuarios();
           /// si quiero hacer una pantalla individual o generica uso esa direccion ('/movie_$item')
