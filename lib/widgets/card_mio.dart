@@ -9,12 +9,12 @@ class MovieCard extends StatelessWidget {
   final String thumbnailUrl;
   final String id;
  
-  const MovieCard({Key key, 
-    @required this.title,
-    @required this.release,
-    @required this.rating,
-    @required this.thumbnailUrl,
-    @required this.id,
+  const MovieCard({Key? key, 
+    required this.title,
+    required this.release,
+    required this.rating,
+    required this.thumbnailUrl,
+    required this.id,
     
   }) : super(key: key);
   @override

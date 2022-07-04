@@ -6,17 +6,17 @@ import 'package:peliculas_clone/classes/movie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MoviesProvider extends ChangeNotifier {
-  final List<Movie> _movies = [];
+  late final List<Movie> _movies = [];
   List<Movie> get movies => _movies;
 
-  final List<Movie> _allMovies = [];
+  late final List<Movie> _allMovies = [];
   List<Movie> get allMovies => _allMovies;
 
   MoviesProvider.init() {
     cargarListadoFavoritosDesdePreferencias();
   }
 
-  final List<String> _listadoPeliculaFavoritos = [];
+  late final List<String> _listadoPeliculaFavoritos = [];
   List<String> get listadoPeliculaFavoritos => _listadoPeliculaFavoritos;
 
   String _urlDelServicioSolicitado = '';
@@ -39,7 +39,7 @@ class MoviesProvider extends ChangeNotifier {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    String datosAlmacenadosJson;
+    String? datosAlmacenadosJson;
 
     try {
       ///Levanta datos de internet
@@ -58,7 +58,7 @@ class MoviesProvider extends ChangeNotifier {
       datosAlmacenadosJson = prefs.getString('$itemParaValidarUrl');
     }
 
-    Map jsonData = jsonDecode(datosAlmacenadosJson);
+    Map jsonData = jsonDecode(datosAlmacenadosJson!);
 
     List peliculas = jsonData['results'];
 
@@ -117,15 +117,19 @@ class MoviesProvider extends ChangeNotifier {
   cargarListadoFavoritosDesdePreferencias() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    List<String> listado = prefs.getStringList('listadoFavoritos');
+    List<String>? listado = prefs.getStringList('listadoFavoritos');
+    if (listado==null){
+      _listadoPeliculaFavoritos.addAll([]);
+    } else {
     _listadoPeliculaFavoritos.addAll(listado);
+    }
   }
 
   Future getListadoPeliculasTotal(String itemParaValidarUrl2) async {
     _allMovies.clear();
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    String datosAlmacenadosJson;
+    String? datosAlmacenadosJson;
 
     if (itemParaValidarUrl2 == 'Populares' ||
         itemParaValidarUrl2 == 'Recientes') {
@@ -159,7 +163,7 @@ class MoviesProvider extends ChangeNotifier {
           prefs.getString('carteleraTotal$itemParaValidarUrl2');
     }
 
-    Map jsonData = jsonDecode(datosAlmacenadosJson);
+    Map jsonData = jsonDecode(datosAlmacenadosJson!);
 
     List peliculas = jsonData['results'];
 

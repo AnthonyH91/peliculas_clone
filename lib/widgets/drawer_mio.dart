@@ -4,7 +4,7 @@ import 'package:peliculas_clone/providers/movies_provider.dart';
 import 'package:provider/provider.dart';
 
 class DrawerMio extends StatelessWidget {
-  DrawerMio({Key key}) : super(key: key);
+  DrawerMio({Key? key}) : super(key: key);
 
   final _eleccionesDePestana = ['Populares', 'Recientes', 'Proximamente'];
 
@@ -57,7 +57,8 @@ class DrawerMio extends StatelessWidget {
               arguments: itemElegido);
         },
       );
-    }).toList();
+    }
+    ).toList();
 
     return widgets;
   }

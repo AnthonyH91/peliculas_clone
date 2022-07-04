@@ -5,7 +5,7 @@ import 'package:peliculas_clone/providers/movies_provider.dart';
 import 'package:provider/provider.dart';
 
 class BottomNavBarMio extends StatefulWidget {
-  const BottomNavBarMio({Key key}) : super(key: key);
+  const BottomNavBarMio({Key? key}) : super(key: key);
 
   @override
   State<BottomNavBarMio> createState() => _BottomNavBarMioState();
@@ -17,8 +17,9 @@ class _BottomNavBarMioState extends State<BottomNavBarMio> {
     return Consumer<MoviesProvider>(
       builder: (BuildContext context, data, _) {
         return BottomNavigationBar(
-          backgroundColor: MyColors.colorTercero,
+          backgroundColor: MyColors.colorSegundo,
           selectedItemColor: MyColors.colorCuarto,
+          unselectedItemColor: MyColors.colorTercero,
           iconSize: 24,
           selectedFontSize: 18,
           currentIndex: data.indiceScreen,

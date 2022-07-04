@@ -8,7 +8,7 @@ class MyColors {
   
   static Color colorSegundo = const Color.fromARGB(255, 141, 0, 16);
   
-  static Color colorTercero = const Color.fromARGB(255, 141, 0, 16);
+  static Color colorTercero = const Color.fromARGB(255, 147, 239, 0);
   
   static Color colorCuarto = const Color.fromARGB(255, 228, 191, 186);
   

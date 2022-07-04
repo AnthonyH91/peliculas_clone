@@ -5,7 +5,7 @@ import 'package:peliculas_clone/providers/movies_provider.dart';
 import 'package:provider/provider.dart';
 
 class MoviesDetails extends StatefulWidget {
- const  MoviesDetails({Key key}) : super(key: key);
+ const  MoviesDetails({Key? key}) : super(key: key);
 
   @override
   State<MoviesDetails> createState() => _MoviesDetailsState();
@@ -18,7 +18,7 @@ class _MoviesDetailsState extends State<MoviesDetails> {
   Widget build(BuildContext context) {
     //final args = ModalRoute.of(context).settings.arguments as int;
     final peliculaSeleccionada =
-        ModalRoute.of(context).settings.arguments as Movie;
+        ModalRoute.of(context)?.settings.arguments as Movie;
 return Consumer<MoviesProvider>(builder: (BuildContext context, data, _) {
     return Scaffold(
       
@@ -158,7 +158,7 @@ return Consumer<MoviesProvider>(builder: (BuildContext context, data, _) {
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(140, 40),
                           textStyle: const TextStyle(fontSize: 24),
-                          primary: MyColors.colorTercero,
+                          primary: MyColors.colorSegundo,
                           onPrimary: MyColors.colorCuarto,
                         ),
                       onPressed: () {

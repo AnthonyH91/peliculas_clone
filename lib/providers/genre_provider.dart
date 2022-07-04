@@ -10,7 +10,7 @@ class GenreProvider extends ChangeNotifier {
   final List<Genre> _generos = [];
         List<Genre> get genres => _generos;
 
-        String _urlDelServicioSolicitado;
+        String? _urlDelServicioSolicitado;
 
   Future getListadogeneros(urlRecibida) async {
 
@@ -25,7 +25,7 @@ class GenreProvider extends ChangeNotifier {
       ///Levanta datos de internet
       Client http = Client();
 
-      Uri uri = Uri.parse(_urlDelServicioSolicitado);
+      Uri uri = Uri.parse(_urlDelServicioSolicitado!);
 
       Response response = await http.get(uri);
 
@@ -35,7 +35,7 @@ class GenreProvider extends ChangeNotifier {
     } catch (e) {
       /// Levanta informacion local
 
-      datosAlmacenadosJson = prefs.getString('datosInternetGeneros');
+      datosAlmacenadosJson = prefs.getString('datosInternetGeneros')!;
     }
 
     Map jsonData = jsonDecode(datosAlmacenadosJson);

@@ -1,21 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:peliculas_clone/classes/genres.dart';
+import 'package:peliculas_clone/classes/movie.dart';
 import 'package:peliculas_clone/controlador.dart';
 import 'package:peliculas_clone/mis_colores.dart';
 import 'package:peliculas_clone/providers/genre_provider.dart';
 import 'package:peliculas_clone/providers/movies_provider.dart';
-
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:peliculas_clone/widgets/bottom_nav_bar_mio.dart';
 import 'package:peliculas_clone/widgets/chip_mio.dart';
 import 'package:peliculas_clone/widgets/drawer_mio.dart';
 import 'package:peliculas_clone/widgets/gridview_mio.dart';
 
-import 'package:peliculas_clone/widgets/swiper_mio.dart';
 import 'package:provider/provider.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({Key key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     Provider.of<GenreProvider>(context, listen: false).getListadogeneros(
@@ -72,24 +77,54 @@ class HomePage extends StatelessWidget {
               );
             }).toList();
 
-            return ListView(
-              children: <Widget>[
-                Divider(thickness: 10.0, color: MyColors.colorSegundo),
-                const SwiperMio(),
-                Divider(thickness: 10.0, color: MyColors.colorSegundo),
-                SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    children: widgetgeneros,
-                  ),
-                ),
-                Divider(thickness: 10.0, color: MyColors.colorSegundo),
-                const SizedBox(
-                  child: GridViewMio(),
-                  height: 320,
-                ),
-              ],
+            return Consumer<MoviesProvider>(
+              builder: (BuildContext context, data, _) {
+                List<Widget>? widgetpeliculas =
+                    data.allMovies.map((Movie pelicula) {
+                  return GestureDetector(
+                    onTap: (){
+                      Navigator.pushNamed(context, ('/movie_details'),
+                                    arguments:
+                                        pelicula);
+                    },
+                    child: Image.network(
+                      
+                      getImage(pelicula.image),
+                      fit: BoxFit.fill,
+                      width: 250,
+                      height: 200,
+                    ),
+                  );
+                }).toList();
+
+                return ListView(
+                  children: <Widget>[
+                    Divider(thickness: 10.0, color: MyColors.colorSegundo),
+                    CarouselSlider(
+                      options: CarouselOptions(
+                        autoPlay: true,
+                        aspectRatio: 2.0,
+                        enlargeCenterPage: true,
+                      ),
+                      items: widgetpeliculas,
+                    ),
+                    Divider(thickness: 10.0, color: MyColors.colorSegundo),
+                    SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: Row(
+                        children: widgetgeneros,
+                      ),
+                    ),
+                    Divider(thickness: 10.0, color: MyColors.colorSegundo),
+                    const SizedBox(
+                      child: GridViewMio(),
+                      height: 320,
+                    ),
+                  ],
+                );
+              },
             );
+           
           },
         ),
         bottomNavigationBar: const BottomNavBarMio(),

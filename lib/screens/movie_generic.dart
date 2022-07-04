@@ -13,14 +13,14 @@ import 'package:peliculas_clone/widgets/card_mio.dart';
 import 'package:provider/provider.dart';
 
 class MoviesGenerics extends StatefulWidget {
-  const MoviesGenerics({Key key}) : super(key: key);
+  const MoviesGenerics({Key? key}) : super(key: key);
 
   @override
   State<MoviesGenerics> createState() => _MoviesGenericsState();
 }
 
 class _MoviesGenericsState extends State<MoviesGenerics> {
-  String _urlDelServicioSolicitado;
+  late String _urlDelServicioSolicitado;
 
   get urlDelServicioSolicitado => _urlDelServicioSolicitado;
 
@@ -28,7 +28,7 @@ class _MoviesGenericsState extends State<MoviesGenerics> {
 
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context).settings.arguments as String;
+    final args = ModalRoute.of(context)?.settings.arguments as String;
 
     return Consumer<MoviesProvider>(builder: (BuildContext context, data, _) {
       return Scaffold(
@@ -38,7 +38,7 @@ class _MoviesGenericsState extends State<MoviesGenerics> {
           leading: IconButton(
             onPressed: () {
               data.actualizarIndice(0);
-                         Navigator.popUntil(context, ModalRoute.withName('/'));
+              Navigator.popUntil(context, ModalRoute.withName('/'));
             },
             icon: const Icon(Icons.arrow_back),
           ),
@@ -86,7 +86,7 @@ class _MoviesGenericsState extends State<MoviesGenerics> {
               Consumer<MoviesProvider>(
                 builder: (BuildContext context, data, _) {
                   return Card(
-                    color: MyColors.colorTercero,
+                    color: MyColors.colorSegundo,
                     elevation: 10,
                     clipBehavior: Clip.antiAlias,
                     shape: RoundedRectangleBorder(
@@ -166,17 +166,22 @@ class _MoviesGenericsState extends State<MoviesGenerics> {
               ),
               const Divider(),
               Expanded(
-                child: ListWheelScrollView(
-                  itemExtent: 350,
-                  physics: const FixedExtentScrollPhysics(),
-                  perspective: 0.004,
-                  children: widgetpeliculas,
-                  onSelectedItemChanged: (index) {
-                    setState(() {
-                      indexDelListadoPeliculas = index;
-                    });
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, ('/movie_details'),
+                        arguments: data.movies[indexDelListadoPeliculas]);
+                  },
+                  child: ListWheelScrollView(
+                    itemExtent: 350,
+                    physics: const FixedExtentScrollPhysics(),
+                    perspective: 0.004,
+                    children: widgetpeliculas,
+                    onSelectedItemChanged: (index) {
+                      setState(() {
+                        indexDelListadoPeliculas = index;
+                      });
 
-                    /*ScaffoldMessenger.of(context)
+                      /*ScaffoldMessenger.of(context)
                     ..removeCurrentSnackBar()
                     ..showSnackBar(SnackBar(
                       duration: Duration(seconds: 2),
@@ -187,7 +192,8 @@ class _MoviesGenericsState extends State<MoviesGenerics> {
                             ///ENVIO DE ARGUMENTO EL OBJETO INDIVIDUAL!!!!!!
                           }),
                     ));*/
-                  },
+                    },
+                  ),
                 ),
               ),
             ],

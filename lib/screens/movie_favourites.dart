@@ -7,10 +7,10 @@ import 'package:peliculas_clone/widgets/bottom_nav_bar_mio.dart';
 import 'package:provider/provider.dart';
 
 class MovieFavourites extends StatelessWidget {
-  const MovieFavourites({Key key}) : super(key: key);
+  const MovieFavourites({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final args = ModalRoute.of(context).settings.arguments as String;
+    final args = ModalRoute.of(context)?.settings.arguments as String;
 
     return Consumer<MoviesProvider>(builder: (BuildContext context, data, _) {
       return Scaffold(
@@ -36,14 +36,14 @@ class MovieFavourites extends StatelessWidget {
                         data.allMovies.map((Movie movie) {
                       return Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 0.5),
-                          child:
+                          child: 
                               data.listadoPeliculaFavoritos.contains(movie.id)
                                   ? ListTile(
                                       leading: Icon(
                                         Icons.favorite,
                                         color: data.listadoPeliculaFavoritos
                                                 .contains(movie.id)
-                                            ? MyColors.colorQuinto
+                                            ? Colors.red 
                                             : const Color.fromARGB(
                                                 255, 102, 105, 98),
                                       ),
@@ -55,7 +55,7 @@ class MovieFavourites extends StatelessWidget {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      tileColor: MyColors.colorTercero,
+                                      tileColor: MyColors.colorSegundo,
                                       trailing: FadeInImage.assetNetwork(
                                         image: getImage(movie.image),
                                         placeholder: "assets/Cube.gif",
@@ -90,7 +90,7 @@ class MovieFavourites extends StatelessWidget {
                   style: ElevatedButton.styleFrom(
                     minimumSize: const Size(140, 40),
                     textStyle: const TextStyle(fontSize: 24),
-                    primary: MyColors.colorTercero,
+                    primary: MyColors.colorSegundo,
                     onPrimary: MyColors.colorCuarto,
                   ),
                    onPressed: () {

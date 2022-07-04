@@ -4,9 +4,9 @@ class ChipGenero extends StatelessWidget {
   final String nameGenre;
   final String id;
 
-  const ChipGenero({Key key, 
-    @required this.nameGenre,
-    @required this.id,
+  const ChipGenero({Key? key, 
+    required this.nameGenre,
+    required this.id,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
